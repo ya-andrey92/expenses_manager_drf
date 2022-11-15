@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'djoser',
     'timestamps',
     'user.apps.UserConfig',
+    'expenses.apps.ExpensesConfig',
 ]
 
 AUTH_USER_MODEL = 'user.CustomUser'

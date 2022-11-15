@@ -1,0 +1,13 @@
+from timestamps.models import models, Model
+from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+
+User = get_user_model()
+
+
+class Category(Model):
+    name = models.CharField(max_length=128, verbose_name=_('name'))
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('user'))
+
+    def __str__(self):
+        return self.name
