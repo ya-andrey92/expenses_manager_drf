@@ -1,7 +1,8 @@
+from django.db import transaction
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from .serializers import CategoryUserSerializer, CategorySerializer
-from .models import Category
+from .serializers import CategoryUserSerializer, CategorySerializer, TransactionSerializer
+from .models import Category, Transaction
 from .paginations import CustomPagination
 from .permissions import ReadOnly
 
@@ -28,3 +29,17 @@ class CategoryViewSet(ModelViewSet):
         if self.request.user.is_staff:
             self.serializer_class = CategorySerializer
         return super().get_serializer_class()
+
+
+class TransactionViewSet(ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = CustomPagination
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        with transaction.atomic():
+            TransactionSerializer.change_user_balance(instance.user, instance.amount, '-')
+            response = super().destroy(request, *args, **kwargs)
+        return response
