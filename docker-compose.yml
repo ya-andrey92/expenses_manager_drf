@@ -1,0 +1,55 @@
+version: "3.10"
+
+services:
+  web:
+    build:
+      context: .
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - .:/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis_db
+    container_name: expenses_manager_drf-web
+
+  db:
+    image: postgres:14
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    restart: always
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    container_name: expenses_manager_drf-postgres_db
+
+  redis_db:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+    container_name: expenses_manager_drf-redis_db
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  backend:
+    name: backend
+    driver: bridge
