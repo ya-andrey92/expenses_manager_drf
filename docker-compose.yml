@@ -45,6 +45,36 @@ services:
       - backend
     container_name: expenses_manager_drf-redis_db
 
+  celery_worker:
+    restart: always
+    build:
+      context: .
+    command: celery -A config worker -l info
+    volumes:
+      - .:/app/
+    depends_on:
+      - db
+      - redis_db
+      - web
+    networks:
+      - backend
+    container_name: expenses_manager_drf-celery_worker
+
+  celery_beat:
+    restart: always
+    build:
+      context: .
+    command: celery -A config beat -l info
+    volumes:
+      - .:/app/
+    depends_on:
+      - db
+      - redis_db
+      - web
+    networks:
+      - backend
+    container_name: expenses_manager_drf-celery_beat
+
 volumes:
   postgres_data:
   redis_data:
