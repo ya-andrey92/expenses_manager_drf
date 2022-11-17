@@ -11,6 +11,7 @@ from .filters import IsAdminFullOrIsOwnerFilterBackend, TransactionFilter
 
 
 class CategoryViewSet(ModelViewSet):
+    """Категории пользователя"""
     queryset = Category.objects.all()
     serializer_class = CategoryUserSerializer
     permission_classes = (IsAuthenticated,)
@@ -29,6 +30,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class TransactionViewSet(ModelViewSet):
+    """Транзакции пользователя"""
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     permission_classes = (IsAdminUser,)

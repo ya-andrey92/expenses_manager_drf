@@ -1,3 +1,4 @@
+## Задачи
 <details>
 <summary>Тестовое задание "Менеджер учёта расходов"</summary>   
 Вам необходимо реализовать API для учета расходов пользователя.   
@@ -41,6 +42,34 @@
    
    
 СУБД: PostgreSQL   
-Дамп БД: test\_db.dump   
+Дамп БД: test\_db.dump
 В качестве решения принимаются SQL запросы, которые можно разместить в отдельном файле в репозитории, вместе с первой частью тестового задания. Дамп базы и пример ответов размещать не нужно.
 </details>
+
+## Установка
+* соберите контейнеры
+```commandline
+docker-compose up -d --build
+```
+* войдите в контейнер
+```commandline
+docker exec -it container_name bash
+```
+* выполните миграции
+```commandline
+python manage.py makemigrations
+```
+```commandline
+python manage.py migrate
+```
+
+## Приложение
+* Получить доступ к приложению
+```djangourlpath
+http://localhost:8000/
+```
+
+* Информация об API
+```djangourlpath
+http://localhost:8000/swagger/
+```
