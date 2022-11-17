@@ -1,3 +1,5 @@
+*.csv
+
 # Migrations
 **/migrations/**
 !**/migrations
