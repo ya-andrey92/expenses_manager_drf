@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'timestamps',
     'user.apps.UserConfig',
     'expenses.apps.ExpensesConfig',
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL = 'user.CustomUser'
