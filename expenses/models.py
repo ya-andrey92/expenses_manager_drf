@@ -10,7 +10,7 @@ class Category(Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('user'))
 
     def __str__(self):
-        return f'{self.user} - {self.name}'
+        return self.name
 
 
 class Transaction(Model):
@@ -23,4 +23,4 @@ class Transaction(Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('user'))
 
     def __str__(self):
-        return f'{self.category} - {self.amount}'
+        return f'{self.organization} - {self.amount}'
